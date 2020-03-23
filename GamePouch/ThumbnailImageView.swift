@@ -9,7 +9,7 @@
 import UIKit
 
 class ThumbnailImageView: UIImageView {
-    let placeholderImage = Images.placeholder
+    private let placeholderImage = Images.placeholder
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -20,11 +20,13 @@ class ThumbnailImageView: UIImageView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure() {
+    private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
-        clipsToBounds = true
         layer.cornerRadius = 10
+        clipsToBounds = true
         image = placeholderImage
     }
+    
+    // TODO: download image
 
 }

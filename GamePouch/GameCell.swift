@@ -11,7 +11,13 @@ import UIKit
 class GameCell: UICollectionViewCell {
     
     static let reuseID = "GameCell"
-    let thumbnailImageView = ThumbnailImageView(frame: .zero)
+    private let rankLabel = UILabel()
+    private let thumbnailImageView = ThumbnailImageView(frame: .zero)
+    private let titleLabel = UILabel()
+    private let ratingLabel = UILabel()
+    private let weightLabel = UILabel()
+    private let numPlayersLabel = UILabel()
+    private let playtimeLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,6 +29,8 @@ class GameCell: UICollectionViewCell {
     }
     
     private func configure() {
-        addSubviews(thumbnailImageView)
+        addSubviews(rankLabel, thumbnailImageView, titleLabel, ratingLabel, weightLabel, numPlayersLabel, playtimeLabel)
     }
+    
+    //TODO: set gamecell properties
 }
