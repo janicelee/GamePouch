@@ -20,8 +20,7 @@ class NetworkManager: NSObject {
     
     private override init() {}
     
-    func searchForGame(_ onComplete: @escaping ([Game]) -> ()) {
-        
+    func searchForGames(_ onComplete: @escaping ([Game]) -> ()) {
         guard let url = URL(string: baseURL) else {
             print("URL conversion failed")
             return
@@ -50,14 +49,15 @@ extension NetworkManager: XMLParserDelegate {
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
         if elementName == "boardgame" {
             tempGame = Game()
+            tempGame.setId(to: attributeDict["objectid"] ?? "")
         }
     }
     
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-        if elementName == "yearpublished" {
-            tempGame.yearPublished = contentBuffer.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-        } else if elementName == "name" {
-            tempGame.name = contentBuffer.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        if elementName == "name" {
+            tempGame.setName(to: contentBuffer.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
+        } else if elementName == "yearpublished" {
+            tempGame.setYearPublished(to: contentBuffer.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
         } else if elementName == "boardgame" {
             searchResult.games.append(tempGame)
         }

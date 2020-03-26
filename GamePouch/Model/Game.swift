@@ -6,14 +6,36 @@
 //  Copyright © 2020 Janice Lee. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class Game {
-    var yearPublished: String = ""
-//    let minPlayers: Int
-//    let maxPlayers: Int
-//    let playingTime: Int
-    var name: String = ""
-//    let description: String
-//    let thumbnail: String // use this or image?
+    private var id: String = ""
+    private var name: String = ""
+    private var yearPublished: String = ""
+    private var image: UIImage?
+    
+    func getId() -> String {
+        return id
+    }
+    
+    func getName() -> String {
+        return name
+    }
+    
+    func getYearPublished() -> String {
+        return yearPublished
+    }
+    
+    func setId(to id: String) {
+        self.id = id
+    }
+    
+    func setName(to name: String) {
+        self.name = name
+    }
+    
+    func setYearPublished(to yearPublished: String) {
+        self.yearPublished = yearPublished
+    }
 }
+
