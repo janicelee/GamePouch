@@ -9,33 +9,46 @@
 import UIKit
 
 class Game {
-    private var id: String = ""
-    private var name: String = ""
-    private var yearPublished: String = ""
-    private var image: UIImage?
+    private var id: String?
+    private var name: String?
+    private var yearPublished: String?
+    private var rank: String?
+    private var thumbnailURLString: String?
     
-    func getId() -> String {
+    // MARK: Getters
+    
+    func getId() -> String? {
         return id
     }
     
-    func getName() -> String {
+    func getName() -> String? {
         return name
     }
     
-    func getYearPublished() -> String {
+    func getYearPublished() -> String? {
         return yearPublished
     }
     
-    func setId(to id: String) {
+    func getRank() -> String? {
+        return rank
+    }
+    
+    // MARK: Setters
+    
+    func setId(to id: String?) {
         self.id = id
     }
     
-    func setName(to name: String) {
+    func setName(to name: String?) {
         self.name = name
     }
     
-    func setYearPublished(to yearPublished: String) {
+    func setYearPublished(to yearPublished: String?) {
         self.yearPublished = yearPublished
+    }
+    
+    func setRank(to rank: String?) {
+        self.rank = rank
     }
 }
 

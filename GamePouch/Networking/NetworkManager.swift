@@ -8,20 +8,27 @@
 
 import UIKit
 
+enum SearchType {
+    case search
+    case hotness
+}
+
 class NetworkManager: NSObject {
     static let shared = NetworkManager()
-    //private let baseURL = "https://www.boardgamegeek.com/xmlapi2/boardgame"
-    private let baseURL = "https://www.boardgamegeek.com/xmlapi/search?search=Mansions"
+    private let baseURL = "https://www.boardgamegeek.com/xmlapi2/"
+    private let searchURL = "search?type=boardgame,boardgameexpansion&query="
+    private let hotnessURL = "hot?type=boardgame,boardgameexpansion"
     
     private var searchResult = SearchResult()
     private var tempGame = Game()
     private var contentBuffer = String()
     
-    
     private override init() {}
     
-    func searchForGames(_ onComplete: @escaping ([Game]) -> ()) {
-        guard let url = URL(string: baseURL) else {
+    func retrieveGames(type: SearchType, title: String = "", onComplete: @escaping ([Game]) -> ()) {
+        
+        let finalURL = baseURL + (type == SearchType.search ? (searchURL + title) : hotnessURL)
+        guard let url = URL(string: finalURL) else {
             print("URL conversion failed")
             return
         }
@@ -47,25 +54,21 @@ class NetworkManager: NSObject {
 // MARK: XMLParserDelegate Methods
 extension NetworkManager: XMLParserDelegate {
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
-        if elementName == "boardgame" {
+        if elementName == "item" {
             tempGame = Game()
-            tempGame.setId(to: attributeDict["objectid"] ?? "")
+            tempGame.setId(to: attributeDict["id"] ?? "")
+            tempGame.setRank(to: attributeDict["rank"] ?? "")
+        } else if elementName == "name" {
+            tempGame.setName(to: attributeDict["value"] ?? "")
+        } else if elementName == "yearpublished" {
+            tempGame.setYearPublished(to: attributeDict["value"] ?? "")
         }
     }
     
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-        if elementName == "name" {
-            tempGame.setName(to: contentBuffer.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
-        } else if elementName == "yearpublished" {
-            tempGame.setYearPublished(to: contentBuffer.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
-        } else if elementName == "boardgame" {
+        if elementName == "item" {
             searchResult.games.append(tempGame)
         }
-        contentBuffer = ""
-    }
-    
-    func parser(_ parser: XMLParser, foundCharacters string: String) {
-        contentBuffer += string
     }
 }
 

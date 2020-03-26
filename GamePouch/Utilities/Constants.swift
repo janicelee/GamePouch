@@ -8,12 +8,6 @@
 
 import UIKit
 
-struct UIConstants {
-    struct layout {
-        static let searchBarCornerRadius: CGFloat = 8
-    }
-}
-
 enum Images {
     static let placeholder = UIImage(named: "pouch")
 }

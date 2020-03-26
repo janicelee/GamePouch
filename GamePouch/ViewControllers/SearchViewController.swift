@@ -31,16 +31,19 @@ class SearchViewController: UIViewController {
         navigationItem.searchController = searchController // adds searchBar to navigationItem
         definesPresentationContext = true // ensures search bar doesn't stay on screen if user navigates to another viewcontroller while UISearchController is active
         
-        networkManager.searchForGames(setGames)
+        networkManager.retrieveGames(type: SearchType.hotness, onComplete: setGames)
     }
     
     func setGames(_ games: [Game]) {
         self.games = games
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     func filterContentForSearchText(_ searchText: String) {
       filteredGames = games.filter { (game: Game) -> Bool in
-        return game.getName().lowercased().contains(searchText.lowercased())
+        return (game.getName()?.lowercased().contains(searchText.lowercased()) ?? false)
       }
       tableView.reloadData()
     }
