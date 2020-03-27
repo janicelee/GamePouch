@@ -26,7 +26,6 @@ class NetworkManager: NSObject {
     private override init() {}
     
     func retrieveGames(type: SearchType, title: String = "", onComplete: @escaping ([Game]) -> ()) {
-        
         let finalURL = baseURL + (type == SearchType.search ? (searchURL + title) : hotnessURL)
         guard let url = URL(string: finalURL) else {
             print("URL conversion failed")
@@ -49,6 +48,26 @@ class NetworkManager: NSObject {
         }
         task.resume()
     }
+    
+    func downloadImage(from urlString: String, onComplete: @escaping (UIImage?) -> ()) {
+        guard let url = URL(string: urlString) else {
+            onComplete(nil)
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            guard error == nil,
+                let response = response as? HTTPURLResponse,
+                response.statusCode == 200,
+                let data = data,
+                let image = UIImage(data: data) else {
+                    onComplete(nil)
+                    return
+            }
+            onComplete(image)
+        }
+        task.resume()
+    }
 }
 
 // MARK: XMLParserDelegate Methods
@@ -58,6 +77,8 @@ extension NetworkManager: XMLParserDelegate {
             tempGame = Game()
             tempGame.setId(to: attributeDict["id"] ?? "")
             tempGame.setRank(to: attributeDict["rank"] ?? "")
+        } else if elementName == "thumbnail" {
+            tempGame.setThumbnailURL(to: attributeDict["value"] ?? "")
         } else if elementName == "name" {
             tempGame.setName(to: attributeDict["value"] ?? "")
         } else if elementName == "yearpublished" {

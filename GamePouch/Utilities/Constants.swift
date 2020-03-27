@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum Images {
-    static let placeholder = UIImage(named: "pouch")
-}
+//enum Images {
+//    static let placeholder = UIImage(named: "pouch")
+//}
 

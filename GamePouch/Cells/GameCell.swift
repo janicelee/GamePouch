@@ -14,8 +14,22 @@ class GameCell: UITableViewCell {
     
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var playerNumberLabel: UILabel!
+    @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var playtimeLabel: UILabel!
+    @IBOutlet weak var weightLabel: UILabel!
     
     func setGame(to game: Game) {
         nameLabel.text = game.getName()
+        downloadImage(fromURL: game.getThumbnailURL())
+    }
+    
+    func downloadImage(fromURL urlString: String?) {
+        guard let urlString = urlString else { return }
+        NetworkManager.shared.downloadImage(from: urlString) { (image) in
+            DispatchQueue.main.async {
+                self.thumbnailImageView.image = image
+            }
+        }
     }
 }
