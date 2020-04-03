@@ -31,7 +31,7 @@ class SearchViewController: UIViewController {
         navigationItem.searchController = searchController // adds searchBar to navigationItem
         definesPresentationContext = true // ensures search bar doesn't stay on screen if user navigates to another viewcontroller while UISearchController is active
         
-        networkManager.retrieveGames(type: SearchType.hotness, onComplete: setGames)
+        networkManager.getHotnessList(type: SearchType.hotness, onComplete: setGames)
     }
     
     func setGames(_ games: [Game]) {

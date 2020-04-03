@@ -8,55 +8,86 @@
 
 import UIKit
 
-class Game {
+class Game: NSObject {
     private var id: String?
-    private var name: String?
-    private var yearPublished: String?
-    private var rank: String?
     private var thumbnailURL: String?
+    private var imageURL: String?
+    private var name: String?
+    private var gameDescription: String?
+    private var yearPublished: String?
+    private var minPlayers: String?
+    private var maxPlayers: String?
+    private var playingTime: String?
+    private var minAge: String?
+    //private var boardGameCategory: String?
+    //private var boardGameMechanic: String?
     
+    private var rating: String?
+    private var rank: String?
+    private var weight: String?
+
     // MARK: Getters
     
-    func getId() -> String? {
-        return id
-    }
+    func getId() -> String? { return id }
     
-    func getName() -> String? {
-        return name
-    }
+    func getThumbnailURL() -> String? { return thumbnailURL }
     
-    func getYearPublished() -> String? {
-        return yearPublished
-    }
+    func getImageURL() -> String? { return imageURL }
     
-    func getRank() -> String? {
-        return rank
-    }
+    func getName() -> String? { return name }
     
-    func getThumbnailURL() -> String? {
-        return thumbnailURL
-    }
+    func getGameDescription() -> String? { return gameDescription }
+    
+    func getYearPublished() -> String? { return yearPublished }
+    
+    func getMinPlayers() -> String? { return minPlayers }
+    
+    func getMaxPlayers() -> String? { return maxPlayers }
+    
+    func getPlayingTime() -> String? { return playingTime }
+    
+    func getMinAge() -> String? { return minAge }
+    
+    //func getBoardGameCategory() -> String? { return boardGameCategory }
+    
+    //func getBoardGameMechanic() -> String? { return boardGameMechanic }
+    
+    func getRating() -> String? { return rating }
+    
+    func getRank() -> String? { return rank }
+    
+    func getWeight() -> String? { return weight }
     
     // MARK: Setters
     
-    func setId(to id: String?) {
-        self.id = id
-    }
+    func setId(to id: String?) { self.id = id }
     
-    func setName(to name: String?) {
-        self.name = name
-    }
+    func setThumbnailURL(to urlString: String?) { self.thumbnailURL = urlString }
     
-    func setYearPublished(to yearPublished: String?) {
-        self.yearPublished = yearPublished
-    }
+    func setImageURL(to urlString: String?) { self.imageURL = urlString }
     
-    func setRank(to rank: String?) {
-        self.rank = rank
-    }
+    func setName(to name: String?) { self.name = name }
     
-    func setThumbnailURL(to urlString: String?) {
-        self.thumbnailURL = urlString
-    }
+    func setGameDescription(to description: String?) { self.gameDescription = description }
+    
+    func setYearPublished(to yearPublished: String?) { self.yearPublished = yearPublished }
+    
+    func setMinPlayers(to minPlayers: String?) { self.minPlayers = minPlayers }
+    
+    func setMaxPlayers(to maxPlayers: String?) { self.maxPlayers = maxPlayers }
+    
+    func setPlayingTime(to playingTime: String?) { self.playingTime = playingTime }
+    
+    func setMinAge(to minAge: String?) { self.minAge = minAge }
+
+    //func setBoardGameCategory(to category: String?) {self.boardGameCategory = category }
+    
+    // func setBoardGameMechanic(to mechanic: String?) { self.boardGameMechanic = mechanic  }
+    
+    func setRating(to rating: String?) { self.rating = rating }
+    
+    func setRank(to rank: String?) { self.rank = rank }
+    
+    func setWeight(to weight: String?) { self.weight = weight }
 }
 

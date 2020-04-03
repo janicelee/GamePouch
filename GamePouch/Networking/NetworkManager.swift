@@ -16,32 +16,54 @@ enum SearchType {
 class NetworkManager: NSObject {
     static let shared = NetworkManager()
     private let baseURL = "https://www.boardgamegeek.com/xmlapi2/"
-    private let searchURL = "search?type=boardgame,boardgameexpansion&query="
-    private let hotnessURL = "hot?type=boardgame,boardgameexpansion"
-    
-    private var searchResult = SearchResult()
-    private var tempGame = Game()
-    private var contentBuffer = String()
+//    private let generalSearchURL = "search?type=boardgame,boardgameexpansion&query="
+    private let getGameURL = "thing?type=boardgame,boardgameexpansion&stats=1&id="
+    private let hotGamesURL = "hot?type=boardgame,boardgameexpansion"
     
     private override init() {}
     
-    func retrieveGames(type: SearchType, title: String = "", onComplete: @escaping ([Game]) -> ()) {
-        let finalURL = baseURL + (type == SearchType.search ? (searchURL + title) : hotnessURL)
-        guard let url = URL(string: finalURL) else {
-            print("URL conversion failed")
-            return
-        }
+    func getHotnessList(type: SearchType, onComplete: @escaping ([Game]) -> ()) {
+        let finalURL = baseURL + hotGamesURL
+        guard let url = URL(string: finalURL) else { return }
         
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else {
-                print(error ?? "Unknown error")
-                return
+            guard let data = data, error == nil else { return }
+            
+            let hotGamesParser = HotGamesParser()
+            if hotGamesParser.fromXML(data: data) {
+                let group = DispatchGroup()
+                var games = [Game]()
+                
+                for hotGame in hotGamesParser.games {
+                    group.enter()
+                    if let id = hotGame.getId() {
+                        self.getGame(id: id) { (game) in
+                            games.append(game)
+                            group.leave()
+                        }
+                    }
+                }
+                
+                group.notify(queue: .main) {
+                    onComplete(games)
+                }
+            } else {
+                //
             }
-            self.searchResult = SearchResult()
-            let parser = XMLParser(data: data)
-            parser.delegate = self
-            if parser.parse() {
-                onComplete(self.searchResult.games)
+        }
+        task.resume()
+    }
+    
+    func getGame(id: String, onComplete: @escaping (Game) -> ()) {
+        let finalURL = baseURL + getGameURL + id
+        guard let url = URL(string: finalURL) else { return }
+        
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            
+            let getGameParser = GetGameParser()
+            if getGameParser.fromXML(data: data) {
+                onComplete(getGameParser.game)
             } else {
                 
             }
@@ -67,29 +89,6 @@ class NetworkManager: NSObject {
             onComplete(image)
         }
         task.resume()
-    }
-}
-
-// MARK: XMLParserDelegate Methods
-extension NetworkManager: XMLParserDelegate {
-    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
-        if elementName == "item" {
-            tempGame = Game()
-            tempGame.setId(to: attributeDict["id"] ?? "")
-            tempGame.setRank(to: attributeDict["rank"] ?? "")
-        } else if elementName == "thumbnail" {
-            tempGame.setThumbnailURL(to: attributeDict["value"] ?? "")
-        } else if elementName == "name" {
-            tempGame.setName(to: attributeDict["value"] ?? "")
-        } else if elementName == "yearpublished" {
-            tempGame.setYearPublished(to: attributeDict["value"] ?? "")
-        }
-    }
-    
-    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-        if elementName == "item" {
-            searchResult.games.append(tempGame)
-        }
     }
 }
 

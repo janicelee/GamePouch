@@ -14,14 +14,26 @@ class GameCell: UITableViewCell {
     
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var playerNumberLabel: UILabel!
+    @IBOutlet weak var numPlayersLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
-    @IBOutlet weak var playtimeLabel: UILabel!
     @IBOutlet weak var weightLabel: UILabel!
+    @IBOutlet weak var rankLabel: UILabel!
+    @IBOutlet weak var minAgeLabel: UILabel!
+    @IBOutlet weak var playtimeLabel: UILabel!
     
     func setGame(to game: Game) {
         nameLabel.text = game.getName()
+        numPlayersLabel.text = isValid(game.getMinPlayers()) && isValid(game.getMaxPlayers()) ? "\(game.getMinPlayers()!)-\(game.getMaxPlayers()!)" : "N/A"
+        ratingLabel.text = isValid(game.getRating()) ? game.getRating() : "N/A"
+        playtimeLabel.text = isValid(game.getPlayingTime()) ? "\(game.getPlayingTime()!)m" : "N/A"
+        weightLabel.text = isValid(game.getWeight()) ? game.getWeight() : "N/A"
+        rankLabel.text = isValid(game.getRank()) ? "\(game.getRank()!)th" : "N/A"
+        minAgeLabel.text = isValid(game.getMinAge()) ? "\(game.getMinAge()!)+" : "N/A"
         downloadImage(fromURL: game.getThumbnailURL())
+    }
+    
+    func isValid(_ text: String?) -> Bool {
+        return text != nil && text != "0" && text != "Not Ranked"
     }
     
     func downloadImage(fromURL urlString: String?) {
