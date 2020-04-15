@@ -25,6 +25,9 @@ class SearchViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        navigationController?.navigationBar.prefersLargeTitles = true
+        title = "Hot Games"
+        
         searchController.searchResultsUpdater = self // inform this class of any text changes within UISearchBar
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search for a game"
@@ -32,6 +35,14 @@ class SearchViewController: UIViewController {
         definesPresentationContext = true // ensures search bar doesn't stay on screen if user navigates to another viewcontroller while UISearchController is active
         
         networkManager.getHotnessList(type: SearchType.hotness, onComplete: setGames)
+        //networkManager.downloadImages()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let selectedIndexPath = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: selectedIndexPath, animated: animated)
+        }
     }
     
     func setGames(_ games: [Game]) {
@@ -64,6 +75,15 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         let game = isFiltering ? filteredGames[indexPath.row] : games[indexPath.row]
         cell.setGame(to: game)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedGame = games[indexPath.row]
+        
+        if let gameInfoViewController = storyboard?.instantiateViewController(withIdentifier: "GameInfoViewController") as? GameInfoViewController {
+            gameInfoViewController.game = selectedGame
+            navigationController?.pushViewController(gameInfoViewController, animated: true)
+        }
     }
 }
 

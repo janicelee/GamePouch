@@ -36,6 +36,10 @@ extension GetGameParser: XMLParserDelegate {
             game.setPlayingTime(to: attributeDict["value"])
         } else if elementName == "minage" {
             game.setMinAge(to: attributeDict["value"])
+        } else if elementName == "video" {
+            if let link = attributeDict["link"] {
+                game.addVideoURL(link)
+            }
         } else if elementName == "average" {
             var rating: String?
             if let value = attributeDict["value"], let numValue = Double(value) {
@@ -61,7 +65,12 @@ extension GetGameParser: XMLParserDelegate {
         } else if elementName == "image" {
             game.setImageURL(to: foundCharacters)
         } else if elementName == "description" {
-            game.setGameDescription(to: foundCharacters)
+            var description = foundCharacters.replacingOccurrences(of: "&#10;&#10;", with: "\n\n")
+            description = description.replacingOccurrences(of: "&ldquo;", with: "\"")
+            description = description.replacingOccurrences(of: "&rdquo;", with: "\"")
+            description = description.replacingOccurrences(of: "&rsquo;", with: "'")
+            description = description.replacingOccurrences(of: "&mdash;", with: "-")
+            game.setGameDescription(to: description)
         }
         self.foundCharacters = ""
     }

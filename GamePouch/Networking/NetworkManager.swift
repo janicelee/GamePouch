@@ -17,14 +17,15 @@ class NetworkManager: NSObject {
     static let shared = NetworkManager()
     private let baseURL = "https://www.boardgamegeek.com/xmlapi2/"
 //    private let generalSearchURL = "search?type=boardgame,boardgameexpansion&query="
-    private let getGameURL = "thing?type=boardgame,boardgameexpansion&stats=1&id="
+    private let getGameURL = "thing?type=boardgame,boardgameexpansion&stats=1&videos=1&id="
     private let hotGamesURL = "hot?type=boardgame,boardgameexpansion"
+    private let galleryImageURL = "https://api.geekdo.com/api/images?ajax=1&gallery=all&nosession=1&objecttype=thing&pageid=1&showcount=36&size=thumb&sort=hot&objectid="
     
     private override init() {}
     
     func getHotnessList(type: SearchType, onComplete: @escaping ([Game]) -> ()) {
-        let finalURL = baseURL + hotGamesURL
-        guard let url = URL(string: finalURL) else { return }
+        let endpoint = baseURL + hotGamesURL
+        guard let url = URL(string: endpoint) else { return }
         
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data, error == nil else { return }
@@ -55,8 +56,8 @@ class NetworkManager: NSObject {
     }
     
     func getGame(id: String, onComplete: @escaping (Game) -> ()) {
-        let finalURL = baseURL + getGameURL + id
-        guard let url = URL(string: finalURL) else { return }
+        let endpoint = baseURL + getGameURL + id
+        guard let url = URL(string: endpoint) else { return }
         
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data, error == nil else { return }
@@ -87,6 +88,41 @@ class NetworkManager: NSObject {
                     return
             }
             onComplete(image)
+        }
+        task.resume()
+    }
+    
+    func downloadGalleryImages(for id: String, onComplete: @escaping ([UIImage]) -> ()) {
+        let endpoint =  galleryImageURL + "\(id)"
+        guard let url = URL(string: endpoint) else { return }
+        
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else { return }
+            guard let data = data else { return }
+            
+            do {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let gameImages = try decoder.decode(GameImages.self, from: data)
+                
+                let group = DispatchGroup()
+                var images = [UIImage]()
+                
+                for gameImage in gameImages.images {
+                    group.enter()
+                    self.downloadImage(from: gameImage.imageurlLg) { image in
+                        if let image = image {
+                            images.append(image)
+                            group.leave()
+                        }
+                    }
+                }
+                group.notify(queue: .main) {
+                    onComplete(images) 
+                }
+            } catch {
+                return
+            }
         }
         task.resume()
     }

@@ -33,11 +33,12 @@ class GameCell: UITableViewCell {
     }
     
     func isValid(_ text: String?) -> Bool {
-        return text != nil && text != "0" && text != "Not Ranked"
+        return text != nil && text != "0" && text != "0.0" && text != "Not Ranked"
     }
     
     func downloadImage(fromURL urlString: String?) {
         guard let urlString = urlString else { return }
+        
         NetworkManager.shared.downloadImage(from: urlString) { (image) in
             DispatchQueue.main.async {
                 self.thumbnailImageView.image = image

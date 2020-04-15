@@ -21,11 +21,11 @@ class Game: NSObject {
     private var minAge: String?
     //private var boardGameCategory: String?
     //private var boardGameMechanic: String?
-    
     private var rating: String?
     private var rank: String?
     private var weight: String?
-
+    private var videoURLs = [String]()
+    
     // MARK: Getters
     
     func getId() -> String? { return id }
@@ -58,6 +58,8 @@ class Game: NSObject {
     
     func getWeight() -> String? { return weight }
     
+    func getVideoURLs() -> [String] { return videoURLs }
+    
     // MARK: Setters
     
     func setId(to id: String?) { self.id = id }
@@ -89,5 +91,7 @@ class Game: NSObject {
     func setRank(to rank: String?) { self.rank = rank }
     
     func setWeight(to weight: String?) { self.weight = weight }
+    
+    func addVideoURL(_ url: String) { self.videoURLs.append(url) }
 }
 
