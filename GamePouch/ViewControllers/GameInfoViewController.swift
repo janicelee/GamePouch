@@ -20,7 +20,7 @@ class GameInfoViewController: UIViewController {
     
     var game: Game!
     var descriptionExpanded = false
-    var images = [UIImage]()
+    var galleryImageURLs = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +29,10 @@ class GameInfoViewController: UIViewController {
         
         title = game.getName()
         configure()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NetworkManager.shared.imageCache.removeAllObjects()
     }
     
     func configure() {
@@ -83,9 +87,11 @@ class GameInfoViewController: UIViewController {
     
     func downloadGalleryImages() {
         if let id = game.getId() {
-            NetworkManager.shared.downloadGalleryImages(for: id) { images in
-                self.images = images
-                self.imageCollectionView.reloadData()
+            NetworkManager.shared.getGalleryImageURLs(for: id) { imageURLs in
+                self.galleryImageURLs = imageURLs
+                DispatchQueue.main.async {
+                    self.imageCollectionView.reloadData()
+                }
              }
         }
     }
@@ -95,12 +101,12 @@ class GameInfoViewController: UIViewController {
 
 extension GameInfoViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        images.count
+        galleryImageURLs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as! ImageCell
-        cell.setImage(to: images[indexPath.row])
+        cell.loadImage(from: galleryImageURLs[indexPath.row])
         return cell
     }
 }

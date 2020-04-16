@@ -11,8 +11,12 @@ import UIKit
 class ImageCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     
-    func setImage(to image: UIImage) {
-        imageView.image = image
+    func loadImage(from imageURL: String) {
+        NetworkManager.shared.downloadImage(from: imageURL) { image in
+            DispatchQueue.main.async {
+                self.imageView.image = image
+            }
+        }
         imageView.layer.cornerRadius = 12
     }
 }

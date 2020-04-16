@@ -15,6 +15,7 @@ enum SearchType {
 
 class NetworkManager: NSObject {
     static let shared = NetworkManager()
+    let imageCache = NSCache<NSString, UIImage>()
     private let baseURL = "https://www.boardgamegeek.com/xmlapi2/"
 //    private let generalSearchURL = "search?type=boardgame,boardgameexpansion&query="
     private let getGameURL = "thing?type=boardgame,boardgameexpansion&stats=1&videos=1&id="
@@ -73,6 +74,13 @@ class NetworkManager: NSObject {
     }
     
     func downloadImage(from urlString: String, onComplete: @escaping (UIImage?) -> ()) {
+        let cacheKey = NSString(string: urlString)
+        
+        if let image = imageCache.object(forKey: cacheKey) {
+            onComplete(image)
+            return
+        }
+        
         guard let url = URL(string: urlString) else {
             onComplete(nil)
             return
@@ -87,12 +95,13 @@ class NetworkManager: NSObject {
                     onComplete(nil)
                     return
             }
+            self.imageCache.setObject(image, forKey: cacheKey)
             onComplete(image)
         }
         task.resume()
     }
     
-    func downloadGalleryImages(for id: String, onComplete: @escaping ([UIImage]) -> ()) {
+    func getGalleryImageURLs(for id: String, onComplete: @escaping ([String]) -> ()) {
         let endpoint =  galleryImageURL + "\(id)"
         guard let url = URL(string: endpoint) else { return }
         
@@ -104,22 +113,12 @@ class NetworkManager: NSObject {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let gameImages = try decoder.decode(GameImages.self, from: data)
-                
-                let group = DispatchGroup()
-                var images = [UIImage]()
+                var imageURLs = [String]()
                 
                 for gameImage in gameImages.images {
-                    group.enter()
-                    self.downloadImage(from: gameImage.imageurlLg) { image in
-                        if let image = image {
-                            images.append(image)
-                            group.leave()
-                        }
-                    }
+                    imageURLs.append(gameImage.imageurlLg)
                 }
-                group.notify(queue: .main) {
-                    onComplete(images) 
-                }
+                onComplete(imageURLs)
             } catch {
                 return
             }
