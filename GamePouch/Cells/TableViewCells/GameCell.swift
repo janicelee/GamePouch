@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GameInfoCell: UITableViewCell {
+class GameCell: UITableViewCell {
     
     static let reuseID = "GameCell"
     
