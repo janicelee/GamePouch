@@ -20,7 +20,7 @@
 		F7EE04C124244E70009D8EF9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7EE04BF24244E70009D8EF9 /* Main.storyboard */; };
 		F7EE04C324244E71009D8EF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7EE04C224244E71009D8EF9 /* Assets.xcassets */; };
 		F7EE04C624244E71009D8EF9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7EE04C424244E71009D8EF9 /* LaunchScreen.storyboard */; };
-		F7EE04D624248B3F009D8EF9 /* GameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EE04D524248B3F009D8EF9 /* GameCell.swift */; };
+		F7EE04D624248B3F009D8EF9 /* GameInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EE04D524248B3F009D8EF9 /* GameInfoCell.swift */; };
 		F7EE04DA24248E9B009D8EF9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EE04D924248E9B009D8EF9 /* Constants.swift */; };
 		F7EE04E024258017009D8EF9 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EE04DF24258017009D8EF9 /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
@@ -44,7 +44,7 @@
 		F7EE04C224244E71009D8EF9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F7EE04C524244E71009D8EF9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F7EE04C724244E71009D8EF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F7EE04D524248B3F009D8EF9 /* GameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCell.swift; sourceTree = "<group>"; };
+		F7EE04D524248B3F009D8EF9 /* GameInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameInfoCell.swift; sourceTree = "<group>"; };
 		F7EE04D924248E9B009D8EF9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F7EE04DF24258017009D8EF9 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -82,7 +82,7 @@
 		F7566D8924400D3B0010570A /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
-				F7EE04D524248B3F009D8EF9 /* GameCell.swift */,
+				F7EE04D524248B3F009D8EF9 /* GameInfoCell.swift */,
 			);
 			path = TableViewCells;
 			sourceTree = "<group>";
@@ -301,7 +301,7 @@
 				F7EE04BC24244E70009D8EF9 /* SceneDelegate.swift in Sources */,
 				F7EE04E024258017009D8EF9 /* NetworkManager.swift in Sources */,
 				F7580412243421E8003102BF /* GetGameParser.swift in Sources */,
-				F7EE04D624248B3F009D8EF9 /* GameCell.swift in Sources */,
+				F7EE04D624248B3F009D8EF9 /* GameInfoCell.swift in Sources */,
 				F7EE04DA24248E9B009D8EF9 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

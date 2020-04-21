@@ -36,10 +36,6 @@ extension GetGameParser: XMLParserDelegate {
             game.setPlayingTime(to: attributeDict["value"])
         } else if elementName == "minage" {
             game.setMinAge(to: attributeDict["value"])
-        } else if elementName == "video" {
-            if let link = attributeDict["link"] {
-                game.addVideoURL(link)
-            }
         } else if elementName == "average" {
             var rating: String?
             if let value = attributeDict["value"], let numValue = Double(value) {

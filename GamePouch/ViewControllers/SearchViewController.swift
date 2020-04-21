@@ -71,7 +71,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: GameCell.reuseID, for: indexPath) as! GameCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: GameInfoCell.reuseID, for: indexPath) as! GameInfoCell
         let game = isFiltering ? filteredGames[indexPath.row] : games[indexPath.row]
         cell.setGame(to: game)
         return cell

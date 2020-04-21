@@ -18,7 +18,7 @@ class NetworkManager: NSObject {
     let imageCache = NSCache<NSString, UIImage>()
     private let baseURL = "https://www.boardgamegeek.com/xmlapi2/"
 //    private let generalSearchURL = "search?type=boardgame,boardgameexpansion&query="
-    private let getGameURL = "thing?type=boardgame,boardgameexpansion&stats=1&videos=1&id="
+    private let getGameURL = "thing?type=boardgame,boardgameexpansion&stats=1&id="
     private let hotGamesURL = "hot?type=boardgame,boardgameexpansion"
     private let galleryImageURL = "https://api.geekdo.com/api/images?ajax=1&gallery=all&nosession=1&objecttype=thing&pageid=1&showcount=36&size=thumb&sort=hot&objectid="
     
@@ -45,7 +45,6 @@ class NetworkManager: NSObject {
                         }
                     }
                 }
-                
                 group.notify(queue: .main) {
                     onComplete(games)
                 }

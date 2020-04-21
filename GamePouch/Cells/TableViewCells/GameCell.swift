@@ -1,5 +1,5 @@
 //
-//  GameCell.swift
+//  GameInfoCell.swift
 //  GamePouch
 //
 //  Created by Janice Lee on 2020-03-19.

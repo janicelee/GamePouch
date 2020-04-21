@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WebKit
 
 class GameInfoViewController: UIViewController {
     
@@ -27,7 +28,7 @@ class GameInfoViewController: UIViewController {
         imageCollectionView.delegate = self
         imageCollectionView.dataSource = self
         
-        title = game.getName()
+        //title = game.getName()
         configure()
     }
     
@@ -75,7 +76,7 @@ class GameInfoViewController: UIViewController {
     
     @objc func labelTapped(_ sender: UITapGestureRecognizer) {
         if descriptionExpanded {
-            descriptionLabel.numberOfLines = 3
+            descriptionLabel.numberOfLines = 5
             descriptionLabel.lineBreakMode = .byTruncatingTail
             descriptionExpanded = false
         } else {
@@ -101,7 +102,7 @@ class GameInfoViewController: UIViewController {
 
 extension GameInfoViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        galleryImageURLs.count
+            return galleryImageURLs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
