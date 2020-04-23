@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E62F770BD4529937F23DDAEE /* libPods-GamePouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E1AAC8B6168C688F61F5255 /* libPods-GamePouch.a */; };
+		2EDCC0E14164CB608E239D59 /* libPods-GamePouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F539F9462BCD1F672F3B074 /* libPods-GamePouch.a */; };
 		F71A68E224380EA70039C885 /* GameInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71A68E124380EA70039C885 /* GameInfoViewController.swift */; };
 		F7566D86243F08910010570A /* GameImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7566D85243F08910010570A /* GameImages.swift */; };
 		F7566D8E24407E710010570A /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7566D8D24407E710010570A /* ImageCell.swift */; };
@@ -15,6 +15,7 @@
 		F79BF6D324287D0B005FF65F /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79BF6D224287D0B005FF65F /* Game.swift */; };
 		F79BF6D72428A8B1005FF65F /* HotGamesParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79BF6D62428A8B1005FF65F /* HotGamesParser.swift */; };
 		F79BF6E0242B6A63005FF65F /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79BF6DF242B6A63005FF65F /* SearchViewController.swift */; };
+		F7D04C07244F0F2400612D57 /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D04C06244F0F2400612D57 /* TagCell.swift */; };
 		F7EE04BA24244E70009D8EF9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EE04B924244E70009D8EF9 /* AppDelegate.swift */; };
 		F7EE04BC24244E70009D8EF9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EE04BB24244E70009D8EF9 /* SceneDelegate.swift */; };
 		F7EE04C124244E70009D8EF9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7EE04BF24244E70009D8EF9 /* Main.storyboard */; };
@@ -26,8 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4F539F9462BCD1F672F3B074 /* libPods-GamePouch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GamePouch.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		98D9641E7B6635ABA44A999E /* Pods-GamePouch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GamePouch.release.xcconfig"; path = "Target Support Files/Pods-GamePouch/Pods-GamePouch.release.xcconfig"; sourceTree = "<group>"; };
-		9E1AAC8B6168C688F61F5255 /* libPods-GamePouch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GamePouch.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEA663943ED655748D79C86C /* Pods-GamePouch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GamePouch.debug.xcconfig"; path = "Target Support Files/Pods-GamePouch/Pods-GamePouch.debug.xcconfig"; sourceTree = "<group>"; };
 		F71395AA243DE3B000EEC824 /* YoutubePlayer_in_WKWebView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = YoutubePlayer_in_WKWebView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F71A68E124380EA70039C885 /* GameInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameInfoViewController.swift; sourceTree = "<group>"; };
@@ -37,6 +38,7 @@
 		F79BF6D224287D0B005FF65F /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		F79BF6D62428A8B1005FF65F /* HotGamesParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotGamesParser.swift; sourceTree = "<group>"; };
 		F79BF6DF242B6A63005FF65F /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		F7D04C06244F0F2400612D57 /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		F7EE04B624244E70009D8EF9 /* GamePouch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GamePouch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7EE04B924244E70009D8EF9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F7EE04BB24244E70009D8EF9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -54,7 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E62F770BD4529937F23DDAEE /* libPods-GamePouch.a in Frameworks */,
+				2EDCC0E14164CB608E239D59 /* libPods-GamePouch.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,7 +67,7 @@
 			isa = PBXGroup;
 			children = (
 				F71395AA243DE3B000EEC824 /* YoutubePlayer_in_WKWebView.framework */,
-				9E1AAC8B6168C688F61F5255 /* libPods-GamePouch.a */,
+				4F539F9462BCD1F672F3B074 /* libPods-GamePouch.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -91,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				F7566D8D24407E710010570A /* ImageCell.swift */,
+				F7D04C06244F0F2400612D57 /* TagCell.swift */,
 			);
 			path = CollectionViewCells;
 			sourceTree = "<group>";
@@ -187,7 +190,6 @@
 				F7EE04B224244E70009D8EF9 /* Sources */,
 				F7EE04B324244E70009D8EF9 /* Frameworks */,
 				F7EE04B424244E70009D8EF9 /* Resources */,
-				D0205FC68FD5C7580C1F9F14 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -267,23 +269,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D0205FC68FD5C7580C1F9F14 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GamePouch/Pods-GamePouch-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GamePouch/Pods-GamePouch-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GamePouch/Pods-GamePouch-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -299,6 +284,7 @@
 				F7566D8E24407E710010570A /* ImageCell.swift in Sources */,
 				F71A68E224380EA70039C885 /* GameInfoViewController.swift in Sources */,
 				F7EE04BC24244E70009D8EF9 /* SceneDelegate.swift in Sources */,
+				F7D04C07244F0F2400612D57 /* TagCell.swift in Sources */,
 				F7EE04E024258017009D8EF9 /* NetworkManager.swift in Sources */,
 				F7580412243421E8003102BF /* GetGameParser.swift in Sources */,
 				F7EE04D624248B3F009D8EF9 /* GameInfoCell.swift in Sources */,

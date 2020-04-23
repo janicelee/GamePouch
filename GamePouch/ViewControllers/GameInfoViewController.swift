@@ -16,8 +16,10 @@ class GameInfoViewController: UIViewController {
     @IBOutlet weak var yearPublishedLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var imageCollectionView: UICollectionView!
+    @IBOutlet weak var tagCollectionView: UICollectionView!
     
     @IBOutlet weak var headerImageViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tagCollectionViewHeightConstraint: NSLayoutConstraint!
     
     var game: Game!
     var descriptionExpanded = false
@@ -27,6 +29,9 @@ class GameInfoViewController: UIViewController {
         super.viewDidLoad()
         imageCollectionView.delegate = self
         imageCollectionView.dataSource = self
+        
+        tagCollectionView.delegate = self
+        tagCollectionView.dataSource = self
         
         //title = game.getName()
         configure()
@@ -102,23 +107,37 @@ class GameInfoViewController: UIViewController {
 
 extension GameInfoViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionView == imageCollectionView {
             return galleryImageURLs.count
+        } else {
+            return game.getCategories().count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as! ImageCell
-        cell.loadImage(from: galleryImageURLs[indexPath.row])
-        return cell
+        if collectionView == imageCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as! ImageCell
+            cell.loadImage(from: galleryImageURLs[indexPath.row])
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TagCell", for: indexPath) as! TagCell
+            cell.setLabel(to: game.getCategory(at: indexPath.row))
+            return cell
+        }
     }
 }
 
 extension GameInfoViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let numVisibleImages = 2
-//        let spacing = 2
-//        let emptySpace = CGFloat((numVisibleImages - 1) * spacing)
-        let width = collectionView.frame.size.width / CGFloat(numVisibleImages).rounded(.down)
-        let height = collectionView.frame.size.height
-        return CGSize(width: width, height: height)
+        if collectionView == imageCollectionView {
+            let numVisibleImages = 2
+            let width = collectionView.frame.size.width / CGFloat(numVisibleImages).rounded(.down)
+            let height = collectionView.frame.size.height
+            return CGSize(width: width, height: height)
+        } else {
+            let text = game.getCategory(at: indexPath.row)
+            let width = text.size(withAttributes: [.font: UIFont.boldSystemFont(ofSize: 14)]).width + 30
+            return CGSize(width: width, height: 30)
+        }
     }
 }

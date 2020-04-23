@@ -19,8 +19,8 @@ class Game: NSObject {
     private var maxPlayers: String?
     private var playingTime: String?
     private var minAge: String?
-    //private var boardGameCategory: String?
-    //private var boardGameMechanic: String?
+    private var categories = [String]()
+    private var mechanics = [String]()
     private var rating: String?
     private var rank: String?
     private var weight: String?
@@ -47,9 +47,11 @@ class Game: NSObject {
     
     func getMinAge() -> String? { return minAge }
     
-    //func getBoardGameCategory() -> String? { return boardGameCategory }
+    func getCategories() -> [String] { return categories }
     
-    //func getBoardGameMechanic() -> String? { return boardGameMechanic }
+    func getCategory(at index: Int) -> String { return categories[index]}
+    
+    func getMechanics() -> [String] { return mechanics }
     
     func getRating() -> String? { return rating }
     
@@ -79,9 +81,9 @@ class Game: NSObject {
     
     func setMinAge(to minAge: String?) { self.minAge = minAge }
 
-    //func setBoardGameCategory(to category: String?) {self.boardGameCategory = category }
+    func addCategory(_ category: String) { self.categories.append(category) }
     
-    // func setBoardGameMechanic(to mechanic: String?) { self.boardGameMechanic = mechanic  }
+    func addMechanic(_ mechanic: String) { self.mechanics.append(mechanic)}
     
     func setRating(to rating: String?) { self.rating = rating }
     

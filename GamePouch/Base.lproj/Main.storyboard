@@ -306,7 +306,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="O1k-T2-PqN">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="588"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="720"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="a92-du-Tfa">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="260"/>
@@ -616,6 +616,43 @@
                                                     </collectionViewCell>
                                                 </cells>
                                             </collectionView>
+                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="vdU-nU-bzd">
+                                                <rect key="frame" x="0.0" y="588" width="414" height="132"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="132" id="CLm-A4-kgU"/>
+                                                </constraints>
+                                                <collectionViewLayout key="collectionViewLayout" id="vKJ-21-XwZ" customClass="LeftAlignedCollectionViewLayout" customModule="LeftAlignedCollectionViewLayout"/>
+                                                <cells>
+                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TagCell" id="slx-TL-IbX" customClass="TagCell" customModule="GamePouch" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="31" height="19"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Bpk-CL-wQH">
+                                                            <rect key="frame" x="0.0" y="0.0" width="31" height="19"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tag" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jxb-YK-GRj">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="31" height="19"/>
+                                                                    <color key="backgroundColor" systemColor="systemIndigoColor" red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="jxb-YK-GRj" firstAttribute="leading" secondItem="Bpk-CL-wQH" secondAttribute="leading" id="VBe-ti-hhN"/>
+                                                                <constraint firstAttribute="bottom" secondItem="jxb-YK-GRj" secondAttribute="bottom" id="ayC-B8-0YF"/>
+                                                                <constraint firstAttribute="trailing" secondItem="jxb-YK-GRj" secondAttribute="trailing" id="nnL-92-aIb"/>
+                                                                <constraint firstItem="jxb-YK-GRj" firstAttribute="top" secondItem="Bpk-CL-wQH" secondAttribute="top" id="p9C-1M-ZxT"/>
+                                                            </constraints>
+                                                        </collectionViewCellContentView>
+                                                        <size key="customSize" width="31" height="19"/>
+                                                        <connections>
+                                                            <outlet property="tagLabel" destination="jxb-YK-GRj" id="Pd8-GW-gdw"/>
+                                                        </connections>
+                                                    </collectionViewCell>
+                                                </cells>
+                                            </collectionView>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="a92-du-Tfa" secondAttribute="trailing" id="y0e-0B-7tD"/>
@@ -649,6 +686,8 @@
                         <outlet property="headerImageViewHeightConstraint" destination="bem-OG-RyQ" id="zt1-Gy-84l"/>
                         <outlet property="imageCollectionView" destination="67a-oq-z6n" id="fr0-9S-zkN"/>
                         <outlet property="nameLabel" destination="aXz-TS-81S" id="gut-xI-fDr"/>
+                        <outlet property="tagCollectionView" destination="vdU-nU-bzd" id="8rP-6x-PwW"/>
+                        <outlet property="tagCollectionViewHeightConstraint" destination="CLm-A4-kgU" id="SrO-1E-xJk"/>
                         <outlet property="yearPublishedLabel" destination="RLh-b9-DU1" id="e3m-iq-Dei"/>
                     </connections>
                 </viewController>
