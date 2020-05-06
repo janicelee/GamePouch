@@ -51,7 +51,13 @@ class Game: NSObject {
     
     func getCategory(at index: Int) -> String { return categories[index]}
     
+    func getNumCategories() -> Int { return categories.count }
+    
     func getMechanics() -> [String] { return mechanics }
+    
+    func getMechanic(at index: Int) -> String { return mechanics[index]}
+    
+    func getNumMechanics() -> Int { return mechanics.count }
     
     func getRating() -> String? { return rating }
     

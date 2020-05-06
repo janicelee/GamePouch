@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TagCell" customModule="GamePouch" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="394" height="127"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YUz-oj-Hff">
+                    <rect key="frame" x="0.0" y="0.0" width="394" height="127"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <constraints>
+                <constraint firstItem="YUz-oj-Hff" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="IKe-27-FzD"/>
+                <constraint firstItem="YUz-oj-Hff" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="U8M-5e-gDx"/>
+                <constraint firstItem="YUz-oj-Hff" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="UoZ-58-gkj"/>
+                <constraint firstItem="YUz-oj-Hff" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="eJp-ZN-Wqz"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="tagLabel" destination="YUz-oj-Hff" id="ah6-Te-4ju"/>
+            </connections>
+            <point key="canvasLocation" x="117.39130434782609" y="134.26339285714286"/>
+        </view>
+    </objects>
+</document>

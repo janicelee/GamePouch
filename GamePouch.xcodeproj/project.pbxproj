@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,6 +16,7 @@
 		F79BF6D72428A8B1005FF65F /* HotGamesParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79BF6D62428A8B1005FF65F /* HotGamesParser.swift */; };
 		F79BF6E0242B6A63005FF65F /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79BF6DF242B6A63005FF65F /* SearchViewController.swift */; };
 		F7D04C07244F0F2400612D57 /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D04C06244F0F2400612D57 /* TagCell.swift */; };
+		F7E90CD22462475000A0A4BA /* TagCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E90CD12462475000A0A4BA /* TagCell.xib */; };
 		F7EE04BA24244E70009D8EF9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EE04B924244E70009D8EF9 /* AppDelegate.swift */; };
 		F7EE04BC24244E70009D8EF9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EE04BB24244E70009D8EF9 /* SceneDelegate.swift */; };
 		F7EE04C124244E70009D8EF9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7EE04BF24244E70009D8EF9 /* Main.storyboard */; };
@@ -39,6 +40,7 @@
 		F79BF6D62428A8B1005FF65F /* HotGamesParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotGamesParser.swift; sourceTree = "<group>"; };
 		F79BF6DF242B6A63005FF65F /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		F7D04C06244F0F2400612D57 /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
+		F7E90CD12462475000A0A4BA /* TagCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagCell.xib; sourceTree = "<group>"; };
 		F7EE04B624244E70009D8EF9 /* GamePouch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GamePouch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7EE04B924244E70009D8EF9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F7EE04BB24244E70009D8EF9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 			children = (
 				F7566D8D24407E710010570A /* ImageCell.swift */,
 				F7D04C06244F0F2400612D57 /* TagCell.swift */,
+				F7E90CD12462475000A0A4BA /* TagCell.xib */,
 			);
 			path = CollectionViewCells;
 			sourceTree = "<group>";
@@ -127,6 +130,13 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		F7E90CD0246239A000A0A4BA /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		F7EE04AD24244E70009D8EF9 = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +158,7 @@
 		F7EE04B824244E70009D8EF9 /* GamePouch */ = {
 			isa = PBXGroup;
 			children = (
+				F7E90CD0246239A000A0A4BA /* New Group */,
 				F7EE04DE24249368009D8EF9 /* Utilities */,
 				F7EE04E12425801D009D8EF9 /* Networking */,
 				F79BF6D124287CF1005FF65F /* Model */,
@@ -238,6 +249,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7E90CD22462475000A0A4BA /* TagCell.xib in Resources */,
 				F7EE04C624244E71009D8EF9 /* LaunchScreen.storyboard in Resources */,
 				F7EE04C324244E71009D8EF9 /* Assets.xcassets in Resources */,
 				F7EE04C124244E70009D8EF9 /* Main.storyboard in Resources */,

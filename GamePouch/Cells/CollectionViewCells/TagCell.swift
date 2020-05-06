@@ -9,10 +9,13 @@
 import UIKit
 
 class TagCell: UICollectionViewCell {
+    
     @IBOutlet weak var tagLabel: UILabel!
     
     func setLabel(to title: String) {
         tagLabel.text = title
         tagLabel.layer.cornerRadius = 12
+        tagLabel.layer.borderWidth = 2
+        tagLabel.layer.borderColor = UIColor.lightGray.cgColor
     }
 }
