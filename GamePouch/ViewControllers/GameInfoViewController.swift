@@ -161,11 +161,11 @@ extension GameInfoViewController: UICollectionViewDelegateFlowLayout {
             return CGSize(width: width, height: height)
         } else if collectionView == categoryCollectionView {
             let text = game.getCategory(at: indexPath.row)
-            let width = text.size(withAttributes: [.font: UIFont.boldSystemFont(ofSize: 14)]).width + 30
+            let width = text.size(withAttributes: [.font: UIFont.systemFont(ofSize: 14)]).width + 30
             return CGSize(width: width, height: 30)
         } else {
             let text = game.getMechanic(at: indexPath.row)
-            let width = text.size(withAttributes: [.font: UIFont.boldSystemFont(ofSize: 14)]).width + 30
+            let width = text.size(withAttributes: [.font: UIFont.systemFont(ofSize: 14)]).width + 30
             return CGSize(width: width, height: 30)
         }
     }

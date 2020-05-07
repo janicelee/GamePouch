@@ -15,16 +15,16 @@
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YUz-oj-Hff">
                     <rect key="frame" x="0.0" y="0.0" width="394" height="127"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <constraints>
-                <constraint firstItem="YUz-oj-Hff" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="IKe-27-FzD"/>
-                <constraint firstItem="YUz-oj-Hff" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="U8M-5e-gDx"/>
-                <constraint firstItem="YUz-oj-Hff" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="UoZ-58-gkj"/>
-                <constraint firstItem="YUz-oj-Hff" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="eJp-ZN-Wqz"/>
+                <constraint firstAttribute="bottom" secondItem="YUz-oj-Hff" secondAttribute="bottom" id="5S8-O3-mZP"/>
+                <constraint firstItem="YUz-oj-Hff" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Q9G-16-9Cx"/>
+                <constraint firstAttribute="trailing" secondItem="YUz-oj-Hff" secondAttribute="trailing" id="V3H-fI-vch"/>
+                <constraint firstItem="YUz-oj-Hff" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="tQM-ec-IRu"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
