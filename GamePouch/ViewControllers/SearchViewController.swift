@@ -10,23 +10,26 @@ import UIKit
 
 class SearchViewController: UIViewController {
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var gameInfoTableView: UITableView!
+    private var searchSuggestionsTableView = UITableView()
     
     private let networkManager = NetworkManager.shared
     private let searchController = UISearchController(searchResultsController: nil)
-    
-    private var games: [Game] = []
-    private var filteredGames: [Game] = []
+    private var hotGames: [Game] = []
+    private var searchSuggestions: [Game] = []
     private var isSearchBarEmpty: Bool { return searchController.searchBar.text?.isEmpty ?? true }
     private var isFiltering: Bool { return searchController.isActive && !isSearchBarEmpty}
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
         
         navigationController?.navigationBar.prefersLargeTitles = true
         title = "Hot Games"
+        
+        setUpSearchSuggestionsTableView()
+        
+        gameInfoTableView.delegate = self
+        gameInfoTableView.dataSource = self
         
         searchController.searchResultsUpdater = self // inform this class of any text changes within UISearchBar
         searchController.obscuresBackgroundDuringPresentation = false
@@ -35,50 +38,75 @@ class SearchViewController: UIViewController {
         definesPresentationContext = true // ensures search bar doesn't stay on screen if user navigates to another viewcontroller while UISearchController is active
         
         networkManager.getHotnessList(type: SearchType.hotness, onComplete: setGames)
-        //networkManager.downloadImages()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let selectedIndexPath = tableView.indexPathForSelectedRow {
-            tableView.deselectRow(at: selectedIndexPath, animated: animated)
+        if let selectedIndexPath = gameInfoTableView.indexPathForSelectedRow {
+            gameInfoTableView.deselectRow(at: selectedIndexPath, animated: animated)
         }
     }
     
+    func setUpSearchSuggestionsTableView() {
+        view.addSubview(searchSuggestionsTableView)
+        
+        searchSuggestionsTableView.delegate = self
+        searchSuggestionsTableView.dataSource = self
+        
+        searchSuggestionsTableView.backgroundColor = UIColor.gray
+        searchSuggestionsTableView.register(UITableViewCell.self, forCellReuseIdentifier: "searchSuggestionCell")
+        searchSuggestionsTableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            searchSuggestionsTableView.topAnchor.constraint(equalTo: gameInfoTableView.topAnchor),
+            searchSuggestionsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            searchSuggestionsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            searchSuggestionsTableView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor)
+        ])
+    }
+    
     func setGames(_ games: [Game]) {
-        self.games = games
+        self.hotGames = games
         DispatchQueue.main.async {
-            self.tableView.reloadData()
+            self.gameInfoTableView.reloadData()
         }
     }
     
     func filterContentForSearchText(_ searchText: String) {
-      filteredGames = games.filter { (game: Game) -> Bool in
-        return (game.getName()?.lowercased().contains(searchText.lowercased()) ?? false)
-      }
-      tableView.reloadData()
+        networkManager.search(for: searchText) { games in
+            self.searchSuggestions = games
+            DispatchQueue.main.async {
+                self.searchSuggestionsTableView.reloadData()
+            }
+        }
     }
 }
 
 extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFiltering {
-            return filteredGames.count
+        if tableView == searchSuggestionsTableView {
+            return searchSuggestions.count > 10 ? 10 : searchSuggestions.count
         } else {
-            return games.count
+            return hotGames.count
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: GameInfoCell.reuseID, for: indexPath) as! GameInfoCell
-        let game = isFiltering ? filteredGames[indexPath.row] : games[indexPath.row]
-        cell.setGame(to: game)
-        return cell
+        if tableView == searchSuggestionsTableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "searchSuggestionCell", for: indexPath)
+            cell.textLabel?.text = searchSuggestions[indexPath.row].getName()
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: GameInfoCell.reuseID, for: indexPath) as! GameInfoCell
+            let game = isFiltering ? searchSuggestions[indexPath.row] : hotGames[indexPath.row]
+            cell.setGame(to: game)
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedGame = games[indexPath.row]
+        let selectedGame = hotGames[indexPath.row]
         
         if let gameInfoViewController = storyboard?.instantiateViewController(withIdentifier: "GameInfoViewController") as? GameInfoViewController {
             gameInfoViewController.game = selectedGame

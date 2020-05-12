@@ -286,7 +286,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Xmw-YU-7gI"/>
                     <connections>
-                        <outlet property="tableView" destination="U3R-6A-f3T" id="ElQ-Ml-J4o"/>
+                        <outlet property="gameInfoTableView" destination="U3R-6A-f3T" id="ElQ-Ml-J4o"/>
                         <segue destination="EUv-Sk-sbH" kind="presentation" identifier="showGameInfo" id="UOr-YF-xj9"/>
                     </connections>
                 </viewController>
