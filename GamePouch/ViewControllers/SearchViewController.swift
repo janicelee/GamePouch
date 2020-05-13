@@ -17,8 +17,10 @@ class SearchViewController: UIViewController {
     private let searchController = UISearchController(searchResultsController: nil)
     private var hotGames: [Game] = []
     private var searchSuggestions: [Game] = []
+    private var maxNumSuggestions = 8
     private var isSearchBarEmpty: Bool { return searchController.searchBar.text?.isEmpty ?? true }
     private var isFiltering: Bool { return searchController.isActive && !isSearchBarEmpty}
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +55,8 @@ class SearchViewController: UIViewController {
         searchSuggestionsTableView.delegate = self
         searchSuggestionsTableView.dataSource = self
         
-        searchSuggestionsTableView.backgroundColor = UIColor.gray
+        searchSuggestionsTableView.backgroundColor = UIColor.green
+        searchSuggestionsTableView.isHidden = true
         searchSuggestionsTableView.register(UITableViewCell.self, forCellReuseIdentifier: "searchSuggestionCell")
         searchSuggestionsTableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -72,11 +75,14 @@ class SearchViewController: UIViewController {
         }
     }
     
-    func filterContentForSearchText(_ searchText: String) {
-        networkManager.search(for: searchText) { games in
-            self.searchSuggestions = games
-            DispatchQueue.main.async {
-                self.searchSuggestionsTableView.reloadData()
+    func getSearchResults(for searchText: String) {
+        networkManager.search(for: searchText) { searchText, games in
+            if searchText == self.searchController.searchBar.text {
+                self.searchSuggestions = games
+                DispatchQueue.main.async {
+                    self.searchSuggestionsTableView.isHidden = false
+                    self.searchSuggestionsTableView.reloadData()
+                }
             }
         }
     }
@@ -86,7 +92,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == searchSuggestionsTableView {
-            return searchSuggestions.count > 10 ? 10 : searchSuggestions.count
+            return searchSuggestions.count > maxNumSuggestions ? maxNumSuggestions : searchSuggestions.count
         } else {
             return hotGames.count
         }
@@ -117,7 +123,12 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension SearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        let searchBar = searchController.searchBar
-        filterContentForSearchText(searchBar.text!)
+        let searchText = searchController.searchBar.text
+        
+        if searchText?.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
+            getSearchResults(for: searchText!)
+        } else {
+            searchSuggestionsTableView.isHidden = true
+        }
     }
 }
