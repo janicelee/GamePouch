@@ -77,13 +77,14 @@ class SearchViewController: UIViewController {
     
     func getSearchResults(for searchText: String) {
         networkManager.search(for: searchText) { searchText, games in
-            if searchText == self.searchController.searchBar.text {
-                self.searchSuggestions = games
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                if searchText == self.searchController.searchBar.text {
+                    self.searchSuggestions = games
                     self.searchSuggestionsTableView.isHidden = false
                     self.searchSuggestionsTableView.reloadData()
                 }
             }
+
         }
     }
 }
