@@ -125,7 +125,7 @@ class NetworkManager: NSObject {
         task.resume()
     }
     
-    func search(for searchText: String, onComplete: @escaping (_ searchText: String, [Game]) -> ()) {
+    func search(for searchText: String, onComplete: @escaping (_ searchText: String, [SearchResult]) -> ()) {
         let endpoint = baseURL + generalSearchURL + "\(searchText)"
         guard let url = URL(string: endpoint) else { return }
         
@@ -134,7 +134,7 @@ class NetworkManager: NSObject {
             
             let searchGamesParser = SearchGamesParser()
             if searchGamesParser.fromXML(data: data) {
-                onComplete(searchText, searchGamesParser.games)
+                onComplete(searchText, searchGamesParser.searchResults)
             } else {
                 
             }

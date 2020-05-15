@@ -9,8 +9,8 @@
 import Foundation
 
 class SearchGamesParser: NSObject {
-    private var game = Game()
-    var games = [Game]()
+    private var searchResult = SearchResult()
+    var searchResults = [SearchResult]()
     
     func fromXML(data: Data) -> Bool {
         let parser = XMLParser(data: data)
@@ -22,16 +22,16 @@ class SearchGamesParser: NSObject {
 extension SearchGamesParser: XMLParserDelegate {
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
         if elementName == "item" {
-            game = Game()
-            game.setId(to:  attributeDict["id"])
+            searchResult = SearchResult()
+            searchResult.setId(to:  attributeDict["id"])
         } else if elementName == "name" {
-            game.setName(to: attributeDict["value"])
+            searchResult.setName(to: attributeDict["value"])
         }
     }
     
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         if elementName == "item" {
-            games.append(game)
+            searchResults.append(searchResult)
         }
     }
 }

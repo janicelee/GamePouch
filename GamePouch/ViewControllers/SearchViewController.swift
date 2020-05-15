@@ -16,7 +16,7 @@ class SearchViewController: UIViewController {
     private let networkManager = NetworkManager.shared
     private let searchController = UISearchController(searchResultsController: nil)
     private var hotGames: [Game] = []
-    private var searchSuggestions: [Game] = []
+    private var searchSuggestions: [SearchResult] = []
     private var maxNumSuggestions = 8
     private var isSearchBarEmpty: Bool { return searchController.searchBar.text?.isEmpty ?? true }
     private var isFiltering: Bool { return searchController.isActive && !isSearchBarEmpty}
@@ -76,10 +76,16 @@ class SearchViewController: UIViewController {
     }
     
     func getSearchResults(for searchText: String) {
-        networkManager.search(for: searchText) { searchText, games in
+        networkManager.search(for: searchText) { searchText, searchResults in
             DispatchQueue.main.async {
                 if searchText == self.searchController.searchBar.text {
-                    self.searchSuggestions = games
+                    if searchResults.isEmpty {
+                        var searchResult = SearchResult()
+                        searchResult.setName(to: "No Results Found")
+                        self.searchSuggestions = [searchResult]
+                    } else {
+                        self.searchSuggestions = searchResults
+                    }
                     self.searchSuggestionsTableView.isHidden = false
                     self.searchSuggestionsTableView.reloadData()
                 }
@@ -106,8 +112,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: GameInfoCell.reuseID, for: indexPath) as! GameInfoCell
-            let game = isFiltering ? searchSuggestions[indexPath.row] : hotGames[indexPath.row]
-            cell.setGame(to: game)
+            cell.setGame(to: hotGames[indexPath.row])
             return cell
         }
     }
