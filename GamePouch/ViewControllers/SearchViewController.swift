@@ -79,13 +79,7 @@ class SearchViewController: UIViewController {
         networkManager.search(for: searchText) { searchText, searchResults in
             DispatchQueue.main.async {
                 if searchText == self.searchController.searchBar.text {
-                    if searchResults.isEmpty {
-                        var searchResult = SearchResult()
-                        searchResult.setName(to: "No Results Found")
-                        self.searchSuggestions = [searchResult]
-                    } else {
-                        self.searchSuggestions = searchResults
-                    }
+                    self.searchSuggestions = searchResults
                     self.searchSuggestionsTableView.isHidden = false
                     self.searchSuggestionsTableView.reloadData()
                 }

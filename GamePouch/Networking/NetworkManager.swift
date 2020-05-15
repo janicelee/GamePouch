@@ -134,6 +134,11 @@ class NetworkManager: NSObject {
             
             let searchGamesParser = SearchGamesParser()
             if searchGamesParser.fromXML(data: data) {
+                if searchGamesParser.searchResults.isEmpty {
+                    var result = SearchResult()
+                    result.setName(to: "No Results Found")
+                    searchGamesParser.searchResults.append(result)
+                }
                 onComplete(searchText, searchGamesParser.searchResults)
             } else {
                 
