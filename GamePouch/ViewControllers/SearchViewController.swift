@@ -10,17 +10,19 @@ import UIKit
 
 class SearchViewController: UIViewController {
     
-    @IBOutlet weak var gameInfoTableView: UITableView!
+    @IBOutlet weak var gameInfoTableView: ContentSizedTableView!
     private var searchSuggestionsTableView = UITableView()
     
     private let networkManager = NetworkManager.shared
     private let searchController = UISearchController(searchResultsController: nil)
     private var hotGames: [Game] = []
+    private var lastSearchText : String?
     private var searchSuggestions: [SearchResult] = []
     private var maxNumSuggestions = 8
     private var isSearchBarEmpty: Bool { return searchController.searchBar.text?.isEmpty ?? true }
     private var isFiltering: Bool { return searchController.isActive && !isSearchBarEmpty}
     
+    private var searchSuggestionsTableViewHeightConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,11 +62,14 @@ class SearchViewController: UIViewController {
         searchSuggestionsTableView.register(UITableViewCell.self, forCellReuseIdentifier: "searchSuggestionCell")
         searchSuggestionsTableView.translatesAutoresizingMaskIntoConstraints = false
         
+        searchSuggestionsTableViewHeightConstraint = searchSuggestionsTableView.heightAnchor.constraint(equalToConstant: 200)
+        
+        
         NSLayoutConstraint.activate([
             searchSuggestionsTableView.topAnchor.constraint(equalTo: gameInfoTableView.topAnchor),
             searchSuggestionsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             searchSuggestionsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            searchSuggestionsTableView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor)
+            searchSuggestionsTableViewHeightConstraint
         ])
     }
     
@@ -76,15 +81,24 @@ class SearchViewController: UIViewController {
     }
     
     func getSearchResults(for searchText: String) {
+        lastSearchText = searchText
         networkManager.search(for: searchText) { searchText, searchResults in
+            
+            
             DispatchQueue.main.async {
-                if searchText == self.searchController.searchBar.text {
+                if searchText == self.lastSearchText {
                     self.searchSuggestions = searchResults
                     self.searchSuggestionsTableView.isHidden = false
                     self.searchSuggestionsTableView.reloadData()
+
+                    let contentHeight = self.searchSuggestionsTableView.contentSize.height
+                    self.searchSuggestionsTableViewHeightConstraint.constant = contentHeight
+                    print(contentHeight)
+                    
+                    self.searchSuggestionsTableView.updateConstraints()
+                    self.view.layoutIfNeeded()
                 }
             }
-
         }
     }
 }
