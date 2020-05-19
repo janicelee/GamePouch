@@ -83,18 +83,15 @@ class SearchViewController: UIViewController {
     func getSearchResults(for searchText: String) {
         lastSearchText = searchText
         networkManager.search(for: searchText) { searchText, searchResults in
-            
-            
-            DispatchQueue.main.async {
-                if searchText == self.lastSearchText {
-                    self.searchSuggestions = searchResults
+            if searchText == self.lastSearchText {
+                self.searchSuggestions = searchResults
+                
+                DispatchQueue.main.async {
                     self.searchSuggestionsTableView.isHidden = false
                     self.searchSuggestionsTableView.reloadData()
 
                     let contentHeight = self.searchSuggestionsTableView.contentSize.height
                     self.searchSuggestionsTableViewHeightConstraint.constant = contentHeight
-                    print(contentHeight)
-                    
                     self.searchSuggestionsTableView.updateConstraints()
                     self.view.layoutIfNeeded()
                 }
