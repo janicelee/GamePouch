@@ -15,12 +15,14 @@ class SearchViewController: UIViewController {
     
     private let networkManager = NetworkManager.shared
     private let searchController = UISearchController(searchResultsController: nil)
+    
     private var hotGames: [Game] = []
     private var lastSearchText : String?
     private var searchSuggestions: [SearchResult] = []
     private var maxNumSuggestions = 8
     private var isSearchBarEmpty: Bool { return searchController.searchBar.text?.isEmpty ?? true }
     private var isFiltering: Bool { return searchController.isActive && !isSearchBarEmpty}
+    private var debouncedSearch: (() -> Void)?
     
     private var searchSuggestionsTableViewHeightConstraint: NSLayoutConstraint!
     
@@ -29,7 +31,9 @@ class SearchViewController: UIViewController {
         
         navigationController?.navigationBar.prefersLargeTitles = true
         title = "Hot Games"
-        
+        debouncedSearch = debounce(interval: 200) {
+            self.getSearchResults(for: self.lastSearchText!)
+        }
         setUpSearchSuggestionsTableView()
         
         gameInfoTableView.delegate = self
@@ -81,11 +85,11 @@ class SearchViewController: UIViewController {
     }
     
     func getSearchResults(for searchText: String) {
-        lastSearchText = searchText
+        print("Searching for " + searchText)
         networkManager.search(for: searchText) { searchText, searchResults in
             if searchText == self.lastSearchText {
                 self.searchSuggestions = searchResults
-                
+                print("Results received for " + searchText)
                 DispatchQueue.main.async {
                     self.searchSuggestionsTableView.isHidden = false
                     self.searchSuggestionsTableView.reloadData()
@@ -135,9 +139,10 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
 extension SearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let searchText = searchController.searchBar.text
-        
+
         if searchText?.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
-            getSearchResults(for: searchText!)
+            lastSearchText = searchText
+            debouncedSearch!()
         } else {
             searchSuggestionsTableView.isHidden = true
         }
