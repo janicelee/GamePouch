@@ -8,22 +8,22 @@
 
 import UIKit
 
-class Game: NSObject {
-    private var id: String?
-    private var thumbnailURL: String?
-    private var imageURL: String?
-    private var name: String?
-    private var gameDescription: String?
-    private var yearPublished: String?
-    private var minPlayers: String?
-    private var maxPlayers: String?
-    private var playingTime: String?
-    private var minAge: String?
-    private var categories = [String]()
-    private var mechanics = [String]()
-    private var rating: String?
-    private var rank: String?
-    private var weight: String?
+class Game: NSObject, Codable {
+    var id: String?
+    var thumbnailURL: String?
+    var imageURL: String?
+    var name: String?
+    var gameDescription: String?
+    var yearPublished: String?
+    var minPlayers: String?
+    var maxPlayers: String?
+    var playingTime: String?
+    var minAge: String?
+    var categories = [String]()
+    var mechanics = [String]()
+    var rating: String?
+    var rank: String?
+    var weight: String?
     
     // MARK: Getters
     

@@ -31,11 +31,13 @@ class SearchViewController: UIViewController {
         
         navigationController?.navigationBar.prefersLargeTitles = true
         title = "Hot Games"
+        
         debouncedSearch = debounce(interval: 200) {
             self.getSearchResults(for: self.lastSearchText!)
         }
         setUpSearchSuggestionsTableView()
         
+        gameInfoTableView.register(UINib(nibName: "GameInfoCell", bundle: nil), forCellReuseIdentifier: "GameInfoCell")
         gameInfoTableView.delegate = self
         gameInfoTableView.dataSource = self
         

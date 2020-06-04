@@ -12,6 +12,7 @@ import WebKit
 class GameInfoViewController: UIViewController {
     
     @IBOutlet weak var headerImageView: UIImageView!
+    @IBOutlet weak var favouriteButton: UIButton!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var yearPublishedLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
@@ -19,7 +20,7 @@ class GameInfoViewController: UIViewController {
     @IBOutlet weak var categoryCollectionView: UICollectionView!
     @IBOutlet weak var mechanicCollectionView: UICollectionView!
     
-    @IBOutlet weak var headerImageViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var headerViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var categoryCollectionViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var mechanicCollectionViewHeightConstraint: NSLayoutConstraint!
     
@@ -82,7 +83,7 @@ class GameInfoViewController: UIViewController {
                 let height =  imageHeight > frameHeight ? (frameHeight / 2) : imageHeight
                 
                 self.headerImageView.image = image
-                self.headerImageViewHeightConstraint.constant = height
+                self.headerViewHeightConstraint.constant = height
                 self.headerImageView.layoutIfNeeded()
             }
         }
@@ -120,6 +121,23 @@ class GameInfoViewController: UIViewController {
         
         view.layoutIfNeeded()
     }
+    
+    @IBAction func favouriteButtonTapped(_ sender: Any) {
+        print("favourite button tapped")
+        PersistenceManager.updateWith(favourite: game, actionType: PersistenceActionType.add) { [weak self] error in
+            guard let self = self else { return }
+            guard let error = error else {
+                DispatchQueue.main.async {
+                    self.favouriteButton.setBackgroundImage(UIImage(systemName: "star.fill"), for: .normal)
+                    print("changing favourite button image")
+                }
+                return
+            }
+            // present alert with error message
+        }
+    }
+    
+    
 }
 
 // MARK: - UICollectionViewDataSource

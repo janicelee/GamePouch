@@ -10,7 +10,7 @@ import UIKit
 
 class GameInfoCell: UITableViewCell {
     
-    static let reuseID = "GameCell"
+    static let reuseID = "GameInfoCell"
     
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
