@@ -27,6 +27,7 @@ class GameInfoViewController: UIViewController {
     var game: Game!
     var descriptionExpanded = false
     var galleryImageURLs = [String]()
+    var isFavourite = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -123,13 +124,19 @@ class GameInfoViewController: UIViewController {
     }
     
     @IBAction func favouriteButtonTapped(_ sender: Any) {
-        print("favourite button tapped")
-        PersistenceManager.updateWith(favourite: game, actionType: PersistenceActionType.add) { [weak self] error in
+        let actionType = isFavourite ? PersistenceActionType.remove : PersistenceActionType.add
+        
+        PersistenceManager.updateWith(favourite: game, actionType: actionType) { [weak self] error in
             guard let self = self else { return }
             guard let error = error else {
                 DispatchQueue.main.async {
-                    self.favouriteButton.setBackgroundImage(UIImage(systemName: "star.fill"), for: .normal)
-                    print("changing favourite button image")
+                    self.isFavourite = !self.isFavourite
+                    
+                    if self.isFavourite {
+                        self.favouriteButton.setBackgroundImage(UIImage(systemName: "star.fill"), for: .normal)
+                    } else {
+                        self.favouriteButton.setBackgroundImage(UIImage(systemName: "star"), for: .normal)
+                    }
                 }
                 return
             }

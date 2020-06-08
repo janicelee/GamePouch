@@ -104,6 +104,13 @@ class SearchViewController: UIViewController {
             }
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let selectedPath = gameInfoTableView.indexPathForSelectedRow else { return }
+        if let gameInfoViewController = segue.destination as? GameInfoViewController {
+            gameInfoViewController.game = hotGames[selectedPath.row]
+        }
+    }
 }
 
 extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
@@ -129,12 +136,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedGame = hotGames[indexPath.row]
-        
-        if let gameInfoViewController = storyboard?.instantiateViewController(withIdentifier: "GameInfoViewController") as? GameInfoViewController {
-            gameInfoViewController.game = selectedGame
-            navigationController?.pushViewController(gameInfoViewController, animated: true)
-        }
+        performSegue(withIdentifier: "showGameInfo", sender: self)
     }
 }
 

@@ -33,7 +33,7 @@
                     <navigationItem key="navigationItem" id="Xmw-YU-7gI"/>
                     <connections>
                         <outlet property="gameInfoTableView" destination="U3R-6A-f3T" id="ElQ-Ml-J4o"/>
-                        <segue destination="EUv-Sk-sbH" kind="presentation" identifier="showGameInfo" id="UOr-YF-xj9"/>
+                        <segue destination="EUv-Sk-sbH" kind="show" identifier="showGameInfo" id="UOr-YF-xj9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uLf-2I-Ds6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -47,7 +47,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="mHp-DJ-mjk">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemIndigoColor" red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FavouriteCell" id="WAV-BB-vIY" customClass="FavouriteCell" customModule="GamePouch" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="47.5"/>
@@ -78,10 +78,13 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Root View Controller" id="263-zC-8Ae"/>
+                    <connections>
+                        <segue destination="EUv-Sk-sbH" kind="show" identifier="showFavouriteGameInfo" id="Oh9-4L-VcZ"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GWo-dt-Iu1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1198.5507246376812" y="1295.7589285714284"/>
+            <point key="canvasLocation" x="1199" y="1286"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="GP7-oj-v7i">
@@ -105,11 +108,11 @@
             <objects>
                 <viewController storyboardIdentifier="GameInfoViewController" id="EUv-Sk-sbH" customClass="GameInfoViewController" customModule="GamePouch" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8TR-1h-tAq">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qlP-3W-eJv">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="O1k-T2-PqN">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="668"/>
@@ -120,7 +123,7 @@
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="a92-du-Tfa">
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="260"/>
                                                     </imageView>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3gS-Vj-eTP">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3gS-Vj-eTP">
                                                         <rect key="frame" x="362" y="10" width="42" height="38"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="38" id="2Ki-Ad-6rY"/>
@@ -486,6 +489,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="e1H-IN-DG7"/>
                     </view>
+                    <navigationItem key="navigationItem" id="UO3-X8-Kjm"/>
                     <connections>
                         <outlet property="categoryCollectionView" destination="vdU-nU-bzd" id="8rP-6x-PwW"/>
                         <outlet property="categoryCollectionViewHeightConstraint" destination="CLm-A4-kgU" id="SrO-1E-xJk"/>
@@ -542,6 +546,9 @@
             <point key="canvasLocation" x="351" y="569"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Oh9-4L-VcZ"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="gear" catalog="system" width="128" height="119"/>
         <image name="person.2.fill" catalog="system" width="128" height="80"/>

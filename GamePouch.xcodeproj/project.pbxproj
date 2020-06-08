@@ -136,7 +136,6 @@
 			children = (
 				F79BF6DF242B6A63005FF65F /* SearchViewController.swift */,
 				F71A68E124380EA70039C885 /* GameInfoViewController.swift */,
-				F75861D4247D32730032D4DD /* FavouritesListViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -187,6 +186,7 @@
 				F79BF6DD242ACDE5005FF65F /* ViewControllers */,
 				F7EE04B924244E70009D8EF9 /* AppDelegate.swift */,
 				F7EE04BB24244E70009D8EF9 /* SceneDelegate.swift */,
+				F75861D4247D32730032D4DD /* FavouritesListViewController.swift */,
 				F7EE04BF24244E70009D8EF9 /* Main.storyboard */,
 				F7EE04C224244E71009D8EF9 /* Assets.xcassets */,
 				F7EE04C424244E71009D8EF9 /* LaunchScreen.storyboard */,

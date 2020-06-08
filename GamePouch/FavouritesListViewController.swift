@@ -56,6 +56,13 @@ class FavouritesListViewController: UITableViewController {
             }
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let selectedPath = tableView.indexPathForSelectedRow else { return }
+        if let gameInfoViewController = segue.destination as? GameInfoViewController {
+            gameInfoViewController.game = favourites[selectedPath.row]
+        }
+    }
 
     // MARK: - Table view data source
 
@@ -68,8 +75,13 @@ class FavouritesListViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "GameInfoCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: GameInfoCell.reuseID, for: indexPath) as! GameInfoCell
+        cell.setGame(to: favourites[indexPath.row])
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "showFavouriteGameInfo", sender: self)
     }
 
     /*
