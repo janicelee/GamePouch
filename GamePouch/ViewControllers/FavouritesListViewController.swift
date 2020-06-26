@@ -30,7 +30,7 @@ class FavouritesListViewController: UITableViewController {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Favourite")
         
         do {
-            favourites = try managedContext.fetch(fetchRequest)
+            favourites = try managedContext.fetch(fetchRequest).reversed()
             updateUI()
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
