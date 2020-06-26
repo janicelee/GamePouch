@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import WebKit
+import CoreData
 
 class GameInfoViewController: UIViewController {
     
@@ -27,7 +27,6 @@ class GameInfoViewController: UIViewController {
     var game: Game!
     var descriptionExpanded = false
     var galleryImageURLs = [String]()
-    var isFavourite = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +43,13 @@ class GameInfoViewController: UIViewController {
         
         //title = game.getName()
         configure()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if isInFavourites().0 {
+            updateFavouriteButtonImage(true)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -75,7 +81,11 @@ class GameInfoViewController: UIViewController {
     }
     
     func setHeaderImage(fromURL urlString: String?) {
-        guard let urlString = urlString else { return }
+        guard let urlString = urlString else {
+            print("NOOOOOO")
+            return
+            
+        }
         
         NetworkManager.shared.downloadImage(from: urlString) { (image) in
             DispatchQueue.main.async {
@@ -124,27 +134,59 @@ class GameInfoViewController: UIViewController {
     }
     
     @IBAction func favouriteButtonTapped(_ sender: Any) {
-        let actionType = isFavourite ? PersistenceActionType.remove : PersistenceActionType.add
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let isInFavouritesResult = isInFavourites()
         
-        PersistenceManager.updateWith(favourite: game, actionType: actionType) { [weak self] error in
-            guard let self = self else { return }
-            guard let error = error else {
-                DispatchQueue.main.async {
-                    self.isFavourite = !self.isFavourite
-                    
-                    if self.isFavourite {
-                        self.favouriteButton.setBackgroundImage(UIImage(systemName: "star.fill"), for: .normal)
-                    } else {
-                        self.favouriteButton.setBackgroundImage(UIImage(systemName: "star"), for: .normal)
-                    }
-                }
-                return
+        do {
+            if isInFavouritesResult.0, let favourite = isInFavouritesResult.1 {
+                managedContext.delete(favourite)
+                updateFavouriteButtonImage(false)
+            } else {
+                let entity = NSEntityDescription.entity(forEntityName: "Favourite", in: managedContext)!
+                let favourite = NSManagedObject(entity: entity, insertInto: managedContext)
+                let id = game.getId()
+            
+                favourite.setValue(id, forKeyPath: "id")
+                updateFavouriteButtonImage(true)
             }
-            // present alert with error message
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not favourite. \(error), \(error.userInfo)")
         }
     }
     
+    func isInFavourites() -> (Bool, NSManagedObject?)  {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return (false, nil) }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Favourite")
+        fetchRequest.predicate = NSPredicate(format: "id == %@", game.id!)
+        
+        do {
+            let fetchResult = try managedContext.fetch(fetchRequest)
+            
+            if !fetchResult.isEmpty {
+                return (true, fetchResult.first)
+            } else {
+                return (false, nil)
+            }
+        } catch let error as NSError {
+            print("Could not verify if game is in favourites. \(error), \(error.userInfo)")
+            return (false, nil)
+        }
+    }
     
+    func updateFavouriteButtonImage(_ favourite: Bool) {
+        if favourite {
+            DispatchQueue.main.async {
+                    self.favouriteButton.setBackgroundImage(UIImage(systemName: "star.fill"), for: .normal)
+                }
+        } else {
+            DispatchQueue.main.async {
+                self.favouriteButton.setBackgroundImage(UIImage(systemName: "star"), for: .normal)
+            }
+        }
+    }
 }
 
 // MARK: - UICollectionViewDataSource

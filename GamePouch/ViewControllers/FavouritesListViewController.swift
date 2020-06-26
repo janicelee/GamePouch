@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import CoreData
 
 class FavouritesListViewController: UITableViewController {
-    var favourites = [Game]()
+    var favourites: [NSManagedObject] = []
+    var selectedGame: Game?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +24,17 @@ class FavouritesListViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getFavourites()
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Favourite")
+        
+        do {
+            favourites = try managedContext.fetch(fetchRequest)
+            updateUI()
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
     }
     
     func configureViewController() {
@@ -30,26 +42,10 @@ class FavouritesListViewController: UITableViewController {
         title = "Favourites"
     }
     
-    func getFavourites() {
-        PersistenceManager.retrieveFavourites { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let favourites):
-                self.updateUI(with: favourites)
-            case .failure(let error):
-                print("problem retrieving favourites")
-                // display alert with error message
-            }
-        }
-    }
-    
-    func updateUI(with favourites: [Game]) {
+    func updateUI() {
         if favourites.isEmpty {
             // show empty state
         } else {
-            self.favourites = favourites
-            
             DispatchQueue.main.async {
                 self.tableView.reloadData()
                 self.view.bringSubviewToFront(self.tableView)
@@ -58,9 +54,8 @@ class FavouritesListViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let selectedPath = tableView.indexPathForSelectedRow else { return }
         if let gameInfoViewController = segue.destination as? GameInfoViewController {
-            gameInfoViewController.game = favourites[selectedPath.row]
+            gameInfoViewController.game = selectedGame
         }
     }
 
@@ -76,12 +71,22 @@ class FavouritesListViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: GameInfoCell.reuseID, for: indexPath) as! GameInfoCell
-        cell.setGame(to: favourites[indexPath.row])
+        if let id = favourites[indexPath.row].value(forKeyPath: "id") as? String {
+            NetworkManager.shared.getGame(id: id) { game in
+                DispatchQueue.main.async {
+                        cell.setGame(to: game)
+                }
+            }
+        }
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "showFavouriteGameInfo", sender: self)
+        let cell = tableView.cellForRow(at: indexPath) as! GameInfoCell
+        if  let game = cell.getGame() {
+            selectedGame = game
+            performSegue(withIdentifier: "showFavouriteGameInfo", sender: self)
+        }
     }
 
     /*

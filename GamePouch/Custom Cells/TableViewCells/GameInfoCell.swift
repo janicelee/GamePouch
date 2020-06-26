@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import CoreData
 
 class GameInfoCell: UITableViewCell {
     
     static let reuseID = "GameInfoCell"
+    var game: Game?
     
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -21,7 +23,12 @@ class GameInfoCell: UITableViewCell {
     @IBOutlet weak var minAgeLabel: UILabel!
     @IBOutlet weak var playtimeLabel: UILabel!
     
+    func getGame() -> Game? {
+        return self.game
+    }
+    
     func setGame(to game: Game) {
+        self.game = game
         nameLabel.text = game.getName()
         numPlayersLabel.text = isValid(game.getMinPlayers()) && isValid(game.getMaxPlayers()) ? "\(game.getMinPlayers()!)-\(game.getMaxPlayers()!)" : "N/A"
         ratingLabel.text = isValid(game.getRating()) ? game.getRating() : "N/A"

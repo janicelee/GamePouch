@@ -20,6 +20,8 @@ class SearchViewController: UIViewController {
     private var lastSearchText : String?
     private var searchSuggestions: [SearchResult] = []
     private var maxNumSuggestions = 8
+    private var suggestedGameSelected: Bool = false
+    private var suggestedGame: Game?
     private var isSearchBarEmpty: Bool { return searchController.searchBar.text?.isEmpty ?? true }
     private var isFiltering: Bool { return searchController.isActive && !isSearchBarEmpty}
     private var debouncedSearch: (() -> Void)?
@@ -52,9 +54,16 @@ class SearchViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let selectedIndexPath = gameInfoTableView.indexPathForSelectedRow {
-            gameInfoTableView.deselectRow(at: selectedIndexPath, animated: animated)
+        suggestedGameSelected = false
+        suggestedGame = nil
+        
+        if let gameInfoTableViewSelectedPath = gameInfoTableView.indexPathForSelectedRow {
+            gameInfoTableView.deselectRow(at: gameInfoTableViewSelectedPath, animated: animated)
         }
+        if let searchSuggestionsTableViewSelectedPath = searchSuggestionsTableView.indexPathForSelectedRow {
+            searchSuggestionsTableView.deselectRow(at: searchSuggestionsTableViewSelectedPath, animated: animated)
+        }
+        
     }
     
     func setUpSearchSuggestionsTableView() {
@@ -106,9 +115,9 @@ class SearchViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let selectedPath = gameInfoTableView.indexPathForSelectedRow else { return }
+        guard let selectedPath = suggestedGameSelected ? searchSuggestionsTableView.indexPathForSelectedRow : gameInfoTableView.indexPathForSelectedRow else { return }
         if let gameInfoViewController = segue.destination as? GameInfoViewController {
-            gameInfoViewController.game = hotGames[selectedPath.row]
+            gameInfoViewController.game = suggestedGameSelected ? suggestedGame : hotGames[selectedPath.row]
         }
     }
 }
@@ -136,7 +145,19 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "showGameInfo", sender: self)
+        if tableView == searchSuggestionsTableView {
+            guard let searchResultId = searchSuggestions[indexPath.row].getId() else { return }
+            suggestedGameSelected = true
+            
+            networkManager.getGame(id: searchResultId) { game in
+                self.suggestedGame = game
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "showGameInfo", sender: self)
+                }
+            }
+        } else {
+            self.performSegue(withIdentifier: "showGameInfo", sender: self)
+        }
     }
 }
 

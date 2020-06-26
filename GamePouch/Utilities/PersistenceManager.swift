@@ -19,51 +19,53 @@ enum PersistenceManager {
         static let favourites = "favourites"
     }
     
-    static func updateWith(favourite: Game, actionType: PersistenceActionType, completed: @escaping (CustomError?) -> ()) {
-        retrieveFavourites { result in
-            switch result {
-            case .success(var favourites):
-                switch actionType {
-                case .add:
-                    guard !favourites.contains(favourite) else {
-                        completed(.alreadyInFavourites)
-                        return
-                    }
-                    favourites.append(favourite)
-                case .remove:
-                    favourites.removeAll { $0.id == favourite.id }
-                }
-                completed(save(favourites: favourites))
-                
-            case .failure(let error):
-                completed(error)
-            }
-        }
-    }
+//    static func updateWith(favourite: Game, actionType: PersistenceActionType, completed: @escaping (CustomError?) -> ()) {
+//        retrieveFavourites { result in
+//            switch result {
+//            case .success(var favourites):
+//                switch actionType {
+//                case .add:
+//                    guard !favourites.contains(favourite) else {
+//                        completed(.alreadyInFavourites)
+//                        return
+//                    }
+//                    favourites.append(favourite)
+//                case .remove:
+//                    favourites.removeAll { $0.id == favourite.id }
+//                }
+//                completed(save(favourites: favourites))
+//
+//            case .failure(let error):
+//                completed(error)
+//            }
+//        }
+//    }
     
-    static func retrieveFavourites(completed: @escaping (Result<[Game], CustomError>) -> ()) {
-        guard let favouritesData = defaults.object(forKey: Keys.favourites) as? Data else {
-            completed(.success([]))
-            return
-        }
-        
-        do {
-            let decoder = JSONDecoder()
-            let favourites = try decoder.decode([Game].self, from: favouritesData)
-            completed(.success(favourites))
-        } catch {
-            completed(.failure(.unableToFavourite))
-        }
-    }
+//    static func retrieveFavourites(completed: @escaping (Result<[Game], CustomError>) -> ()) {
+//        guard let favouritesData = defaults.object(forKey: Keys.favourites) as? Data else {
+//            completed(.success([]))
+//            return
+//        }
+//
+//        do {
+//            let decoder = JSONDecoder()
+//            let favourites = try decoder.decode([Game].self, from: favouritesData)
+//            completed(.success(favourites))
+//        } catch {
+//            completed(.failure(.unableToFavourite))
+//        }
+//    }
     
-    static func save(favourites: [Game]) -> CustomError? {
-        do {
-            let encoder = JSONEncoder()
-            let encodedFavourites = try encoder.encode(favourites)
-            defaults.set(encodedFavourites, forKey: Keys.favourites)
-            return nil
-        } catch {
-            return .unableToFavourite
-        }
-    }
+    
+    
+//    static func save(favourites: [Game]) -> CustomError? {
+//        do {
+//            let encoder = JSONEncoder()
+//            let encodedFavourites = try encoder.encode(favourites)
+//            defaults.set(encodedFavourites, forKey: Keys.favourites)
+//            return nil
+//        } catch {
+//            return .unableToFavourite
+//        }
+//    }
 }
