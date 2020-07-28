@@ -1,0 +1,16 @@
+PODS:
+  - LeftAlignedCollectionViewLayout (0.1.1)
+
+DEPENDENCIES:
+  - LeftAlignedCollectionViewLayout
+
+SPEC REPOS:
+  trunk:
+    - LeftAlignedCollectionViewLayout
+
+SPEC CHECKSUMS:
+  LeftAlignedCollectionViewLayout: 833beb02ff5cc2d90a7165e08266f899a6e649b3
+
+PODFILE CHECKSUM: 8d25b98aa04e7f0f910df512e3198fa0a0c91209
+
+COCOAPODS: 1.9.3

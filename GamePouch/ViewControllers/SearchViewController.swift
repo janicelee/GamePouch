@@ -15,6 +15,7 @@ class SearchViewController: UIViewController {
     
     private let networkManager = NetworkManager.shared
     private let searchController = UISearchController(searchResultsController: nil)
+    private let refreshControl = UIRefreshControl()
     
     private var hotGames: [Game] = []
     private var lastSearchText : String?
@@ -43,13 +44,21 @@ class SearchViewController: UIViewController {
         gameInfoTableView.delegate = self
         gameInfoTableView.dataSource = self
         
+        if #available(iOS 10.0, *) {
+            gameInfoTableView.refreshControl = refreshControl
+        } else {
+            gameInfoTableView.addSubview(refreshControl)
+        }
+        
+        refreshControl.addTarget(self, action: #selector(refreshGameData(_:)), for: .valueChanged)
+        
         searchController.searchResultsUpdater = self // inform this class of any text changes within UISearchBar
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search for a game"
         navigationItem.searchController = searchController // adds searchBar to navigationItem
         definesPresentationContext = true // ensures search bar doesn't stay on screen if user navigates to another viewcontroller while UISearchController is active
         
-        networkManager.getHotnessList(type: SearchType.hotness, onComplete: setGames)
+        fetchGameData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -88,10 +97,24 @@ class SearchViewController: UIViewController {
         ])
     }
     
+    func fetchGameData() {
+        networkManager.getHotnessList(type: SearchType.hotness, onComplete: setGames)
+    }
+    
+    @objc private func refreshGameData(_ sender: Any) {
+        fetchGameData()
+    }
+    
     func setGames(_ games: [Game]) {
+        print("done retrieving hot games")
         self.hotGames = games
+        updateUI()
+    }
+    
+    func updateUI() {
         DispatchQueue.main.async {
             self.gameInfoTableView.reloadData()
+            self.refreshControl.endRefreshing()
         }
     }
     

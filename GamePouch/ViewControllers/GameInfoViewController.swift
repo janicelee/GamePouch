@@ -15,6 +15,14 @@ class GameInfoViewController: UIViewController {
     @IBOutlet weak var favouriteButton: UIButton!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var yearPublishedLabel: UILabel!
+    
+    @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var numPlayersLabel: UILabel!
+    @IBOutlet weak var weightLabel: UILabel!
+    @IBOutlet weak var rankLabel: UILabel!
+    @IBOutlet weak var playtimeLabel: UILabel!
+    @IBOutlet weak var minAgeLabel: UILabel!
+    
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var imageCollectionView: UICollectionView!
     @IBOutlet weak var categoryCollectionView: UICollectionView!
@@ -60,13 +68,13 @@ class GameInfoViewController: UIViewController {
         setHeaderImage(fromURL: game.getImageURL())
         nameLabel.text = game.getName()
         yearPublishedLabel.text = game.getYearPublished()
-//        ratingLabel.text = "Rating: " + (isValid(game.getRating()) ? game.getRating()! : "N/A")
-//        numPlayersLabel.text =
-//            "Players: " + (isValid(game.getMinPlayers()) && isValid(game.getMaxPlayers()) ? "\(game.getMinPlayers()!)-\(game.getMaxPlayers()!)" : "N/A")
-//        weightLabel.text = "Difficulty: " + (isValid(game.getWeight()) ? "\(game.getWeight()!) /5" : "N/A")
-//        rankLabel.text = "Rank: " + (isValid(game.getRank()) ? "\(game.getRank()!)th" : "N/A")
-//        playtimeLabel.text = "Time: " + (isValid(game.getPlayingTime()) ? "\(game.getPlayingTime()!)m" : "N/A")
-//        minAgeLabel.text = "Age: " + (isValid(game.getMinAge()) ? "\(game.getMinAge()!)+" : "N/A")
+        ratingLabel.text = "Rating: " + (isValid(game.getRating()) ? game.getRating()! : "N/A")
+        numPlayersLabel.text =
+            "Players: " + (isValid(game.getMinPlayers()) && isValid(game.getMaxPlayers()) ? "\(game.getMinPlayers()!)-\(game.getMaxPlayers()!)" : "N/A")
+        weightLabel.text = "Difficulty: " + (isValid(game.getWeight()) ? "\(game.getWeight()!) /5" : "N/A")
+        rankLabel.text = "Rank: " + (isValid(game.getRank()) ? "\(game.getRank()!)th" : "N/A")
+        playtimeLabel.text = "Time: " + (isValid(game.getPlayingTime()) ? "\(game.getPlayingTime()!)m" : "N/A")
+        minAgeLabel.text = "Age: " + (isValid(game.getMinAge()) ? "\(game.getMinAge()!)+" : "N/A")
         descriptionLabel.text = isValid(game.getGameDescription()) ? game.getGameDescription() : "N/A"
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
         descriptionLabel.isUserInteractionEnabled = true
@@ -81,11 +89,7 @@ class GameInfoViewController: UIViewController {
     }
     
     func setHeaderImage(fromURL urlString: String?) {
-        guard let urlString = urlString else {
-            print("NOOOOOO")
-            return
-            
-        }
+        guard let urlString = urlString else { return }
         
         NetworkManager.shared.downloadImage(from: urlString) { (image) in
             DispatchQueue.main.async {
